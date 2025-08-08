@@ -83,6 +83,10 @@
   outline: none;
 }
 
+.task_create_form__limit {
+  margin-top: 0.75rem;
+}
+
 .task_create_form__actions {
   margin-top: 1rem;
   display: flex;

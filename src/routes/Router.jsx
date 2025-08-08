@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
-import { Sidebar } from '~/components/Sidebar'
 import Home from '~/pages/index.page'
 import NotFound from '~/pages/404'
 import SignIn from '~/pages/signin/index.page'
@@ -12,11 +11,10 @@ import EditList from '~/pages/lists/[listId]/edit/index.page'
 import ListIndex from '~/pages/lists/[listId]/index.page'
 
 export const Router = () => {
-  const auth = useSelector((state) => state.auth.token !== null)
+  const auth = useSelector(state => state.auth.token !== null)
 
   return (
     <BrowserRouter>
-      <Sidebar />
       <div className="main_content">
         <Switch>
           <Route exact path="/signin">

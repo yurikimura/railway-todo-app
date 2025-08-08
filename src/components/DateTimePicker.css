@@ -1,0 +1,82 @@
+/* DateTimePicker Component Styles */
+
+.datetime_picker_container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.datetime_picker_label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 2px;
+}
+
+.datetime_picker {
+  /* Base styles */
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: all 0.2s ease-in-out;
+  background-color: white;
+  color: #374151;
+  outline: none;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  min-height: 40px;
+
+  /* Focus styles */
+  &:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  }
+
+  /* Hover styles */
+  &:hover:not(:disabled) {
+    border-color: #9ca3af;
+  }
+}
+
+/* Disabled state */
+.datetime_picker--disabled,
+.datetime_picker:disabled {
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
+  color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Calendar and clock icons styling */
+.datetime_picker::-webkit-calendar-picker-indicator {
+  background-color: #6b7280;
+  border-radius: 3px;
+  cursor: pointer;
+  filter: invert(0.5);
+  padding: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.datetime_picker::-webkit-calendar-picker-indicator:hover {
+  background-color: #4f46e5;
+  filter: invert(0.2);
+}
+
+.datetime_picker:disabled::-webkit-calendar-picker-indicator {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Firefox specific styles */
+.datetime_picker::-moz-focus-inner {
+  border: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .datetime_picker {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}

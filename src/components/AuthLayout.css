@@ -1,0 +1,67 @@
+/* AuthLayout Component Styles */
+
+.auth_layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background patterns removed for white background */
+
+/* Header */
+.auth_layout__header {
+  background: #242F9B;
+  border-bottom: 1px solid var(--slate-200);
+  padding: 1.5rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.auth_layout__app_title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.025em;
+}
+
+/* Main content */
+.auth_layout__content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.auth_layout__container {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 2.5rem;
+  border: 1px solid var(--slate-200);
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .auth_layout__header {
+    padding: 1rem;
+  }
+
+  .auth_layout__content {
+    padding: 1rem;
+  }
+
+  .auth_layout__container {
+    padding: 2rem;
+  }
+}

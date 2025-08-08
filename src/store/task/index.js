@@ -12,7 +12,7 @@ export const taskSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
-    resetTask: (state, _action) => {
+    resetTask: state => {
       state.tasks = null
       state.listId = null
       state.isLoading = false
@@ -31,8 +31,9 @@ export const taskSlice = createSlice({
       const id = action.payload.id
       const detail = action.payload.detail
       const done = action.payload.done
+      const limit = action.payload.limit
 
-      state.tasks.push({ title, id, detail, done })
+      state.tasks.push({ title, id, detail, done, limit })
     },
     mutateTask: (state, action) => {
       const id = action.payload.id
@@ -90,7 +91,7 @@ export const fetchTasks = createAsyncThunk(
     } finally {
       thunkApi.dispatch(setTaskIsLoading(false))
     }
-  },
+  }
 )
 
 export const createTask = createAsyncThunk(
@@ -109,12 +110,12 @@ export const createTask = createAsyncThunk(
         addTask({
           ...payload,
           id,
-        }),
+        })
       )
     } catch (e) {
       handleThunkError(e, thunkApi)
     }
-  },
+  }
 )
 
 export const updateTask = createAsyncThunk(
@@ -142,7 +143,7 @@ export const updateTask = createAsyncThunk(
     } catch (e) {
       handleThunkError(e, thunkApi)
     }
-  },
+  }
 )
 
 export const deleteTask = createAsyncThunk(
@@ -159,5 +160,5 @@ export const deleteTask = createAsyncThunk(
     } catch (e) {
       handleThunkError(e, thunkApi)
     }
-  },
+  }
 )

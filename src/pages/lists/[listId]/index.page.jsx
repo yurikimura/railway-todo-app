@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { TaskItem } from '~/components/TaskItem'
 import { TaskCreateForm } from '~/components/TaskCreateForm'
+import Button from '~/components/Button'
 import { setCurrentList } from '~/store/list'
 import { fetchTasks } from '~/store/task'
 import './index.css'
@@ -12,7 +13,7 @@ const ListIndex = () => {
   const { listId } = useParams()
 
   const isLoading = useSelector(
-    state => state.task.isLoading || state.list.isLoading,
+    state => state.task.isLoading || state.list.isLoading
   )
 
   const tasks = useSelector(state => state.task.tasks)
@@ -28,7 +29,7 @@ const ListIndex = () => {
   useEffect(() => {
     dispatch(setCurrentList(listId))
     dispatch(fetchTasks()).unwrap()
-  }, [listId])
+  }, [listId, dispatch])
 
   if (isLoading) {
     return <div></div>
@@ -45,7 +46,7 @@ const ListIndex = () => {
         )}
         <div className="tasks_list__title_spacer"></div>
         <Link to={`/lists/${listId}/edit`}>
-          <button className="app_button">Edit...</button>
+          <Button>Edit...</Button>
         </Link>
       </div>
       <div className="tasks_list__items">

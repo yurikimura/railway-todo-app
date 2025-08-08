@@ -1,0 +1,108 @@
+/* Textarea Component Styles */
+
+.app_textarea {
+  /* Base styles */
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: all 0.2s ease-in-out;
+  background-color: white;
+  color: #374151;
+  outline: none;
+  width: 100%;
+  resize: vertical;
+  line-height: 1.5;
+
+  /* Focus styles */
+  &:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  }
+
+  /* Hover styles */
+  &:hover:not(:disabled) {
+    border-color: #9ca3af;
+  }
+
+  /* Placeholder styles */
+  &::placeholder {
+    color: #9ca3af;
+  }
+}
+
+/* Auto-resize variant */
+.app_textarea--auto-resize {
+  resize: none;
+  overflow: hidden;
+  min-height: auto;
+}
+
+/* Size variants */
+.app_textarea--small {
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  min-height: 80px;
+}
+
+.app_textarea--medium {
+  padding: 12px 16px;
+  font-size: 1rem;
+  min-height: 100px;
+}
+
+.app_textarea--large {
+  padding: 16px 20px;
+  font-size: 1.125rem;
+  min-height: 120px;
+}
+
+/* Auto-resize sizes */
+.app_textarea--auto-resize.app_textarea--small {
+  min-height: 32px;
+}
+
+.app_textarea--auto-resize.app_textarea--medium {
+  min-height: 40px;
+}
+
+.app_textarea--auto-resize.app_textarea--large {
+  min-height: 48px;
+}
+
+/* State variants */
+.app_textarea--default {
+  border-color: #d1d5db;
+}
+
+.app_textarea--error {
+  border-color: #dc2626;
+
+  &:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  }
+}
+
+.app_textarea--success {
+  border-color: #16a34a;
+
+  &:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+  }
+}
+
+/* Disabled state */
+.app_textarea--disabled,
+.app_textarea:disabled {
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
+  color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.6;
+  resize: none;
+}
+
+.app_textarea:disabled::placeholder {
+  color: #d1d5db;
+}

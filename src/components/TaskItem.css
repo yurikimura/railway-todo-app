@@ -27,6 +27,11 @@
   flex: 1;
 }
 
+.task_item__limit {
+  margin-left: auto;
+  margin-right: 8px;
+}
+
 .task_item__title_action {
   width: 1.5rem;
   height: 1.5rem;

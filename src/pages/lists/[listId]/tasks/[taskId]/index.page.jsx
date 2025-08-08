@@ -2,9 +2,14 @@ import { useCallback, useState, useEffect } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { BackButton } from '~/components/BackButton'
+import Button from '~/components/Button'
+import Input from '~/components/Input'
+import Textarea from '~/components/Textarea'
+import DateTimePicker from '~/components/DateTimePicker'
 import './index.css'
 import { setCurrentList } from '~/store/list'
 import { fetchTasks, updateTask, deleteTask } from '~/store/task'
+import { formatToISO } from '~/utils/dateUtils'
 import { useId } from '~/hooks/useId'
 
 const EditTask = () => {
@@ -17,12 +22,13 @@ const EditTask = () => {
   const [title, setTitle] = useState('')
   const [detail, setDetail] = useState('')
   const [done, setDone] = useState(false)
+  const [limit, setLimit] = useState(null)
 
   const [errorMessage, setErrorMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const task = useSelector(state =>
-    state.task.tasks?.find(task => task.id === taskId),
+    state.task.tasks?.find(task => task.id === taskId)
   )
 
   useEffect(() => {
@@ -30,13 +36,14 @@ const EditTask = () => {
       setTitle(task.title)
       setDetail(task.detail)
       setDone(task.done)
+      setLimit(task.limit ? new Date(task.limit) : null)
     }
   }, [task])
 
   useEffect(() => {
     void dispatch(setCurrentList(listId))
     void dispatch(fetchTasks())
-  }, [listId])
+  }, [listId, dispatch])
 
   const onSubmit = useCallback(
     event => {
@@ -44,7 +51,15 @@ const EditTask = () => {
 
       setIsSubmitting(true)
 
-      void dispatch(updateTask({ id: taskId, title, detail, done }))
+      const taskData = {
+        id: taskId,
+        title,
+        detail,
+        done,
+        ...(limit !== null && { limit: formatToISO(limit) }),
+      }
+
+      void dispatch(updateTask(taskData))
         .unwrap()
         .then(() => {
           history.push(`/lists/${listId}`)
@@ -56,7 +71,7 @@ const EditTask = () => {
           setIsSubmitting(false)
         })
     },
-    [title, taskId, listId, detail, done],
+    [title, taskId, listId, detail, done, limit, dispatch, history]
   )
 
   const handleDelete = useCallback(() => {
@@ -77,7 +92,7 @@ const EditTask = () => {
       .finally(() => {
         setIsSubmitting(false)
       })
-  }, [taskId])
+  }, [taskId, dispatch, history])
 
   return (
     <main className="edit_list">
@@ -89,9 +104,8 @@ const EditTask = () => {
           <label htmlFor={`${id}-title`} className="edit_list__form_label">
             Title
           </label>
-          <input
+          <Input
             id={`${id}-title`}
-            className="app_input"
             placeholder="Buy some milk"
             value={title}
             onChange={event => setTitle(event.target.value)}
@@ -101,12 +115,23 @@ const EditTask = () => {
           <label htmlFor={`${id}-detail`} className="edit_list__form_label">
             Description
           </label>
-          <textarea
+          <Textarea
             id={`${id}-detail`}
-            className="app_input"
             placeholder="Blah blah blah"
             value={detail}
             onChange={event => setDetail(event.target.value)}
+            autoResize
+          />
+        </fieldset>
+        <fieldset className="edit_list__form_field">
+          <label htmlFor={`${id}-limit`} className="edit_list__form_label">
+            期限
+          </label>
+          <DateTimePicker
+            id={`${id}-limit`}
+            value={limit}
+            onChange={setLimit}
+            disabled={isSubmitting}
           />
         </fieldset>
         <fieldset className="edit_list__form_field">
@@ -127,17 +152,18 @@ const EditTask = () => {
             Cancel
           </Link>
           <div className="edit_list__form_actions_spacer"></div>
-          <button
+          <Button
             type="button"
-            className="app_button edit_list__form_actions_delete"
+            variant="danger"
+            className="edit_list__form_actions_delete"
             disabled={isSubmitting}
             onClick={handleDelete}
           >
             Delete
-          </button>
-          <button type="submit" className="app_button" disabled={isSubmitting}>
+          </Button>
+          <Button type="submit" disabled={isSubmitting}>
             Update
-          </button>
+          </Button>
         </div>
       </form>
     </main>

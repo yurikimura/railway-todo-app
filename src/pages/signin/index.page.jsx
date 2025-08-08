@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useLogin } from '~/hooks/useLogin'
 import { useId } from '~/hooks/useId'
+import Input from '~/components/Input'
 import './index.css'
 
 const SignIn = () => {
@@ -30,7 +31,7 @@ const SignIn = () => {
           setIsSubmitting(false)
         })
     },
-    [email, password],
+    [email, password, login]
   )
 
   if (auth) {
@@ -38,47 +39,53 @@ const SignIn = () => {
   }
 
   return (
-    <main className="signin">
-      <h2 className="signin__title">Login</h2>
-      <p className="signin__error">{errorMessage}</p>
+    <div className="signin">
+      <header className="signin__header">
+        <h1 className="signin__app_title">Todoアプリ</h1>
+      </header>
+      <h2 className="signin__title">サインイン</h2>
+      {errorMessage && <div className="signin__error">{errorMessage}</div>}
       <form className="signin__form" onSubmit={onSubmit}>
         <fieldset className="signin__form_field">
           <label htmlFor={`${id}-email`} className="signin__form_label">
-            E-mail Address
+            メールアドレス
           </label>
-          <input
+          <Input
             id={`${id}-email`}
             type="email"
             autoComplete="email"
-            className="app_input"
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
         </fieldset>
         <fieldset className="signin__form_field">
           <label htmlFor={`${id}-password`} className="signin__form_label">
-            Password
+            パスワード
           </label>
-          <input
+          <Input
             id={`${id}-password`}
             type="password"
             autoComplete="current-password"
-            className="app_input"
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
         </fieldset>
         <div className="signin__form_actions">
-          <Link className="app_button" data-variant="secondary" to="/signup">
-            Register
-          </Link>
-          <div className="signin__form_actions_spacer"></div>
-          <button type="submit" className="app_button" disabled={isSubmitting}>
-            Login
+          <button
+            type="submit"
+            className="signin__primary_button"
+            disabled={isSubmitting}
+          >
+            サインイン
           </button>
+          <div className="signin__form_actions_row">
+            <Link className="signin__secondary_button" to="/signup">
+              新規作成
+            </Link>
+          </div>
         </div>
       </form>
-    </main>
+    </div>
   )
 }
 

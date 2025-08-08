@@ -1,0 +1,77 @@
+/* TaskLimit Component Styles */
+
+.task_limit {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.task_limit__date {
+  font-weight: 500;
+  color: #374151;
+}
+
+.task_limit__remaining {
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+/* Today variant */
+.task_limit--today {
+  color: #f59e0b;
+}
+
+.task_limit--today .task_limit__date {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.task_limit--today .task_limit__remaining {
+  color: #f59e0b;
+}
+
+/* Overdue variant */
+.task_limit--overdue {
+  color: #dc2626;
+}
+
+.task_limit--overdue .task_limit__date {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.task_limit--overdue .task_limit__remaining {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+/* Compact variant for inline display */
+.task_limit--compact {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.task_limit--compact .task_limit__date {
+  font-size: 0.75rem;
+}
+
+.task_limit--compact .task_limit__remaining {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+/* Small variant */
+.task_limit--small {
+  font-size: 0.7rem;
+}
+
+.task_limit--small .task_limit__date {
+  font-size: 0.7rem;
+}
+
+.task_limit--small .task_limit__remaining {
+  font-size: 0.65rem;
+}

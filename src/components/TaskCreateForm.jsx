@@ -3,9 +3,15 @@ import { useDispatch } from 'react-redux'
 import './TaskCreateForm.css'
 import { CheckIcon } from '~/icons/CheckIcon'
 import { createTask } from '~/store/task'
+import { formatToISO } from '~/utils/dateUtils'
+import { useId } from '~/hooks/useId'
+import Button from './Button'
+import Input from './Input'
+import DateTimePicker from './DateTimePicker'
 
 export const TaskCreateForm = () => {
   const dispatch = useDispatch()
+  const id = useId()
 
   const refForm = useRef(null)
   const [elemTextarea, setElemTextarea] = useState(null)
@@ -15,6 +21,7 @@ export const TaskCreateForm = () => {
   const [title, setTitle] = useState('')
   const [detail, setDetail] = useState('')
   const [done, setDone] = useState(false)
+  const [limit, setLimit] = useState(null)
 
   const handleToggle = useCallback(() => {
     setDone(prev => !prev)
@@ -25,7 +32,7 @@ export const TaskCreateForm = () => {
   }, [])
 
   const handleBlur = useCallback(() => {
-    if (title || detail) {
+    if (title || detail || limit) {
       return
     }
 
@@ -39,11 +46,12 @@ export const TaskCreateForm = () => {
       setFormState('initial')
       setDone(false)
     }, 100)
-  }, [title, detail])
+  }, [title, detail, limit])
 
   const handleDiscard = useCallback(() => {
     setTitle('')
     setDetail('')
+    setLimit(null)
     setFormState('initial')
     setDone(false)
   }, [])
@@ -54,7 +62,14 @@ export const TaskCreateForm = () => {
 
       setFormState('submitting')
 
-      void dispatch(createTask({ title, detail, done }))
+      const taskData = {
+        title,
+        detail,
+        done,
+        ...(limit && { limit: formatToISO(limit) }),
+      }
+
+      void dispatch(createTask(taskData))
         .unwrap()
         .then(() => {
           handleDiscard()
@@ -64,7 +79,7 @@ export const TaskCreateForm = () => {
           setFormState('focused')
         })
     },
-    [title, detail, done],
+    [title, detail, done, limit, dispatch, handleDiscard]
   )
 
   useEffect(() => {
@@ -105,9 +120,7 @@ export const TaskCreateForm = () => {
               className="task_create_form__mark____complete"
               aria-label="Completed"
             >
-              <CheckIcon
-                className="task_create_form__mark____complete_check"
-              />
+              <CheckIcon className="task_create_form__mark____complete_check" />
             </div>
           ) : (
             <div
@@ -116,7 +129,7 @@ export const TaskCreateForm = () => {
             ></div>
           )}
         </button>
-        <input
+        <Input
           type="text"
           className="task_create_form__title"
           placeholder="Add a new task..."
@@ -139,26 +152,37 @@ export const TaskCreateForm = () => {
             onBlur={handleBlur}
             disabled={formState === 'submitting'}
           />
+          <div className="task_create_form__limit">
+            <DateTimePicker
+              id={`${id}-limit`}
+              value={limit}
+              onChange={setLimit}
+              onBlur={handleBlur}
+              disabled={formState === 'submitting'}
+              placeholder="期限を設定（任意）"
+              label="期限"
+            />
+          </div>
           <div className="task_create_form__actions">
-            <button
+            <Button
               type="button"
-              className="app_button"
-              data-variant="secondary"
+              variant="secondary"
               onBlur={handleBlur}
               onClick={handleDiscard}
-              disabled={(!title && !detail) || formState === 'submitting'}
+              disabled={
+                (!title && !detail && !limit) || formState === 'submitting'
+              }
             >
               Discard
-            </button>
+            </Button>
             <div className="task_create_form__spacer"></div>
-            <button
+            <Button
               type="submit"
-              className="app_button"
               onBlur={handleBlur}
-              disabled={!title || !detail || formState === 'submitting'}
+              disabled={!title || formState === 'submitting'}
             >
               Add
-            </button>
+            </Button>
           </div>
         </div>
       )}

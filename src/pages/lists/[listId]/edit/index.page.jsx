@@ -2,6 +2,8 @@ import { useCallback, useState, useEffect } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { BackButton } from '~/components/BackButton'
+import Button from '~/components/Button'
+import Input from '~/components/Input'
 import './index.css'
 import { fetchLists, updateList, deleteList } from '~/store/list'
 import { useId } from '~/hooks/useId'
@@ -19,7 +21,7 @@ const EditList = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const list = useSelector(state =>
-    state.list.lists?.find(list => list.id === listId),
+    state.list.lists?.find(list => list.id === listId)
   )
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const EditList = () => {
 
   useEffect(() => {
     void dispatch(fetchLists())
-  }, [listId])
+  }, [listId, dispatch])
 
   const onSubmit = useCallback(
     event => {
@@ -50,7 +52,7 @@ const EditList = () => {
           setIsSubmitting(false)
         })
     },
-    [title, listId],
+    [title, listId, dispatch, history]
   )
 
   const handleDelete = useCallback(() => {
@@ -71,7 +73,7 @@ const EditList = () => {
       .finally(() => {
         setIsSubmitting(false)
       })
-  }, [])
+  }, [dispatch, history, listId])
 
   return (
     <main className="edit_list">
@@ -83,9 +85,8 @@ const EditList = () => {
           <label htmlFor={`${id}-title`} className="edit_list__form_label">
             Name
           </label>
-          <input
+          <Input
             id={`${id}-title`}
-            className="app_input"
             placeholder="Family"
             value={title}
             onChange={event => setTitle(event.target.value)}
@@ -96,17 +97,18 @@ const EditList = () => {
             Cancel
           </Link>
           <div className="edit_list__form_actions_spacer"></div>
-          <button
+          <Button
             type="button"
-            className="app_button edit_list__form_actions_delete"
+            variant="danger"
+            className="edit_list__form_actions_delete"
             disabled={isSubmitting}
             onClick={handleDelete}
           >
             Delete
-          </button>
-          <button type="submit" className="app_button" disabled={isSubmitting}>
+          </Button>
+          <Button type="submit" disabled={isSubmitting}>
             Update
-          </button>
+          </Button>
         </div>
       </form>
     </main>

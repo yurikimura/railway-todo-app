@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import './index.css'
 import { useSignup } from '~/hooks/useSignup'
 import { useId } from '~/hooks/useId'
+import Input from '~/components/Input'
 
 const SignUp = () => {
   const auth = useSelector(state => state.auth.token !== null)
@@ -32,7 +33,7 @@ const SignUp = () => {
           setIsSubmitting(false)
         })
     },
-    [email, name, password],
+    [email, name, password, signup]
   )
 
   if (auth) {
@@ -40,65 +41,60 @@ const SignUp = () => {
   }
 
   return (
-    <main className="signup">
-      <h2 className="signup__title">Register</h2>
-      <p className="signup__error">{errorMessage}</p>
+    <div className="signup">
+      <header className="signup__header">
+        <h1 className="signup__app_title">Todoアプリ</h1>
+      </header>
+      <h2 className="signup__title">新規登録</h2>
+      {errorMessage && <div className="signup__error">{errorMessage}</div>}
       <form className="signup__form" onSubmit={onSubmit}>
         <fieldset className="signup__form_field">
           <label htmlFor={`${id}-email`} className="signup__form_label">
-            E-mail Address
+            メールアドレス
           </label>
-          <input
+          <Input
             id={`${id}-email`}
+            type="email"
             autoComplete="email"
-            className="app_input"
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
         </fieldset>
         <fieldset className="signup__form_field">
-          <label
-            htmlFor={`${id}-name`}
-            autoComplete="name"
-            className="signup__form_label"
-          >
-            Name
+          <label htmlFor={`${id}-name`} className="signup__form_label">
+            名前
           </label>
-          <input
+          <Input
             id={`${id}-name`}
             type="text"
-            className="app_input"
+            autoComplete="name"
             value={name}
             onChange={event => setName(event.target.value)}
           />
         </fieldset>
         <fieldset className="signup__form_field">
-          <label
-            htmlFor={`${id}-password`}
-            autoComplete="new-password"
-            className="signup__form_label"
-          >
-            Password
-          </label>
-          <input
+          <label htmlFor={`${id}-password`} className="signup__form_label">
+            パスワード
+        </label>
+          <Input
             id={`${id}-password`}
             type="password"
-            className="app_input"
+            autoComplete="new-password"
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
         </fieldset>
         <div className="signup__form_actions">
-          <Link className="app_button" data-variant="secondary" to="/signin">
-            Login
-          </Link>
-          <div className="signup__form_actions_spacer"></div>
-          <button type="submit" className="app_button" disabled={isSubmitting}>
-            Register
+          <button
+            type="submit"
+            className="signup__primary_button"
+            disabled={isSubmitting}
+          >
+            作成
           </button>
         </div>
       </form>
-    </main>
+    </div>
   )
 }
 
