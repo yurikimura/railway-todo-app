@@ -62,7 +62,7 @@ export const login = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const { email, password } = payload
-      const response = await axios.post(`/signin`, {
+      const response = await axios.post(`https://railway.todo.techtrain.dev/signin`, {
         email,
         password,
       })
