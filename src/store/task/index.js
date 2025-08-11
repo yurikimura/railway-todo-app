@@ -33,6 +33,9 @@ export const taskSlice = createSlice({
       const done = action.payload.done
       const limit = action.payload.limit
 
+      if (!state.tasks) {
+        state.tasks = []
+      }
       state.tasks.push({ title, id, detail, done, limit })
     },
     mutateTask: (state, action) => {
@@ -99,6 +102,7 @@ export const createTask = createAsyncThunk(
   async (payload, thunkApi) => {
     const listId = thunkApi.getState().list.current
     if (!listId) {
+      console.warn('createTask: No listId found')
       return
     }
 
@@ -106,6 +110,7 @@ export const createTask = createAsyncThunk(
       const res = await axios.post(`/lists/${listId}/tasks`, payload)
       const id = res.data.id
 
+      console.log('Task created successfully:', { ...payload, id })
       thunkApi.dispatch(
         addTask({
           ...payload,
@@ -113,6 +118,7 @@ export const createTask = createAsyncThunk(
         })
       )
     } catch (e) {
+      console.error('createTask error:', e)
       handleThunkError(e, thunkApi)
     }
   }
