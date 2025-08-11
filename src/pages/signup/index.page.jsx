@@ -45,6 +45,7 @@ const SignUp = () => {
       <header className="signup__header">
         <h1 className="signup__app_title">Todoアプリ</h1>
       </header>
+      <div className="signup__container">
       <h2 className="signup__title">新規登録</h2>
       {errorMessage && <div className="signup__error">{errorMessage}</div>}
       <form className="signup__form" onSubmit={onSubmit}>
@@ -92,8 +93,9 @@ const SignUp = () => {
           >
             作成
           </button>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

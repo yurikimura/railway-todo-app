@@ -81,7 +81,7 @@ export const signup = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const { email, password, name } = payload
-      const response = await axios.post(`/users`, {
+      const response = await axios.post(`https://railway.todo.techtrain.dev/users`, {
         email,
         password,
         name,

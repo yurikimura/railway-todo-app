@@ -41,50 +41,52 @@ const SignIn = () => {
   return (
     <div className="signin">
       <header className="signin__header">
-        <h1 className="signin__app_title">Todoアプリ</h1>
+          <h1 className="signin__app_title">Todoアプリ</h1>
       </header>
-      <h2 className="signin__title">サインイン</h2>
-      {errorMessage && <div className="signin__error">{errorMessage}</div>}
-      <form className="signin__form" onSubmit={onSubmit}>
-        <fieldset className="signin__form_field">
-          <label htmlFor={`${id}-email`} className="signin__form_label">
-            メールアドレス
-          </label>
-          <Input
-            id={`${id}-email`}
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={event => setEmail(event.target.value)}
-          />
-        </fieldset>
-        <fieldset className="signin__form_field">
-          <label htmlFor={`${id}-password`} className="signin__form_label">
-            パスワード
-          </label>
-          <Input
-            id={`${id}-password`}
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={event => setPassword(event.target.value)}
-          />
-        </fieldset>
-        <div className="signin__form_actions">
-          <button
-            type="submit"
-            className="signin__primary_button"
-            disabled={isSubmitting}
-          >
-            サインイン
-          </button>
-          <div className="signin__form_actions_row">
-            <Link className="signin__secondary_button" to="/signup">
-              新規作成
-            </Link>
+      <div className="signin__container">
+        <h2 className="signin__title">サインイン</h2>
+        {errorMessage && <div className="signin__error">{errorMessage}</div>}
+        <form className="signin__form" onSubmit={onSubmit}>
+          <fieldset className="signin__form_field">
+            <label htmlFor={`${id}-email`} className="signin__form_label">
+              メールアドレス
+            </label>
+            <Input
+              id={`${id}-email`}
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+            />
+          </fieldset>
+          <fieldset className="signin__form_field">
+            <label htmlFor={`${id}-password`} className="signin__form_label">
+              パスワード
+            </label>
+            <Input
+              id={`${id}-password`}
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
+          </fieldset>
+          <div className="signin__form_actions">
+            <button
+              type="submit"
+              className="signin__primary_button"
+              disabled={isSubmitting}
+            >
+              サインイン
+            </button>
+            <div className="signin__form_actions_row">
+              <Link className="signin__secondary_button" to="/signup">
+                新規作成
+              </Link>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   )
 }
