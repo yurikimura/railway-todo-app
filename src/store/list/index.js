@@ -73,7 +73,7 @@ export const {
 } = listSlice.actions
 
 export const fetchLists = createAsyncThunk(
-  'list/fetchLists',
+  'https://railway.todo.techtrain.dev/list/fetchLists',
   async ({ force = false } = {}, thunkApi) => {
     const isLoading = thunkApi.getState().list.isLoading
 
@@ -99,10 +99,10 @@ export const fetchLists = createAsyncThunk(
 )
 
 export const createList = createAsyncThunk(
-  'list/createList',
+  'https://railway.todo.techtrain.dev/list/createList',
   async ({ title }, thunkApi) => {
     try {
-      const res = await axios.post('/lists', { title })
+      const res = await axios.post('https://railway.todo.techtrain.dev/lists', { title })
       thunkApi.dispatch(addList(res.data))
 
       return res.data.id
@@ -113,10 +113,10 @@ export const createList = createAsyncThunk(
 )
 
 export const deleteList = createAsyncThunk(
-  'list/deleteList',
+  'https://railway.todo.techtrain.dev/list/deleteList',
   async ({ id }, thunkApi) => {
     try {
-      await axios.delete(`/lists/${id}`)
+      await axios.delete(`https://railway.todo.techtrain.dev/lists/${id}`)
       thunkApi.dispatch(removeList({ id }))
     } catch (e) {
       return handleThunkError(e, thunkApi)
@@ -125,10 +125,10 @@ export const deleteList = createAsyncThunk(
 )
 
 export const updateList = createAsyncThunk(
-  'list/updateList',
+  'https://railway.todo.techtrain.dev/list/updateList',
   async ({ id, title }, thunkApi) => {
     try {
-      await axios.put(`/lists/${id}`, { title })
+      await axios.put(`https://railway.todo.techtrain.dev/lists/${id}`, { title })
       thunkApi.dispatch(mutateList({ id, title }))
     } catch (e) {
       return handleThunkError(e, thunkApi)

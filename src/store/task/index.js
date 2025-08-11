@@ -69,7 +69,7 @@ export const {
 } = taskSlice.actions
 
 export const fetchTasks = createAsyncThunk(
-  'task/fetchTasks',
+  'https://railway.todo.techtrain.dev/task/fetchTasks',
   async ({ force = false } = {}, thunkApi) => {
     const listId = thunkApi.getState().list.current
     const currentListId = thunkApi.getState().task.listId
@@ -86,7 +86,7 @@ export const fetchTasks = createAsyncThunk(
     thunkApi.dispatch(setTaskIsLoading(true))
 
     try {
-      const res = await axios.get(`/lists/${listId}/tasks`)
+      const res = await axios.get(`https://railway.todo.techtrain.dev/lists/${listId}/tasks`)
       thunkApi.dispatch(setTasks(res.data.tasks || []))
       thunkApi.dispatch(setListId(listId))
     } catch (e) {
@@ -98,7 +98,7 @@ export const fetchTasks = createAsyncThunk(
 )
 
 export const createTask = createAsyncThunk(
-  'task/createTask',
+  'https://railway.todo.techtrain.dev/task/createTask',
   async (payload, thunkApi) => {
     const listId = thunkApi.getState().list.current
     if (!listId) {
@@ -107,7 +107,7 @@ export const createTask = createAsyncThunk(
     }
 
     try {
-      const res = await axios.post(`/lists/${listId}/tasks`, payload)
+      const res = await axios.post(`https://railway.todo.techtrain.dev/lists/${listId}/tasks`, payload)
       const id = res.data.id
 
       console.log('Task created successfully:', { ...payload, id })
@@ -125,7 +125,7 @@ export const createTask = createAsyncThunk(
 )
 
 export const updateTask = createAsyncThunk(
-  'task/updateTask',
+  'https://railway.todo.techtrain.dev/task/updateTask',
   async (payload, thunkApi) => {
     const listId = thunkApi.getState().list.current
     if (!listId) {
@@ -141,7 +141,7 @@ export const updateTask = createAsyncThunk(
     }
 
     try {
-      await axios.put(`/lists/${listId}/tasks/${payload.id}`, {
+      await axios.put(`https://railway.todo.techtrain.dev/lists/${listId}/tasks/${payload.id}`, {
         ...oldValue,
         ...payload,
       })
@@ -153,7 +153,7 @@ export const updateTask = createAsyncThunk(
 )
 
 export const deleteTask = createAsyncThunk(
-  'task/deleteTask',
+  'https://railway.todo.techtrain.dev/task/deleteTask',
   async (payload, thunkApi) => {
     try {
       const listId = thunkApi.getState().list.current
@@ -161,7 +161,7 @@ export const deleteTask = createAsyncThunk(
         return
       }
 
-      await axios.delete(`/lists/${listId}/tasks/${payload.id}`)
+      await axios.delete(`https://railway.todo.techtrain.dev/lists/${listId}/tasks/${payload.id}`)
       thunkApi.dispatch(removeTask(payload))
     } catch (e) {
       handleThunkError(e, thunkApi)
