@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { TaskItem } from '~/components/TaskItem'
@@ -11,6 +11,8 @@ import './index.css'
 const ListIndex = () => {
   const dispatch = useDispatch()
   const { listId } = useParams()
+  const [activeTab, setActiveTab] = useState('incomplete') // 'incomplete' or 'completed'
+  const [showCreateForm, setShowCreateForm] = useState(false)
 
   const isLoading = useSelector(
     state => state.task.isLoading || state.list.isLoading
@@ -49,14 +51,55 @@ const ListIndex = () => {
           <Button>Edit...</Button>
         </Link>
       </div>
+      
+      <div className="tasks_list__header">
+        <div className="tasks_list__header_top">
+          <h2 className="tasks_list__tasks_title">タスク一覧</h2>
+          <button 
+            onClick={() => setShowCreateForm(!showCreateForm)}
+            className="tasks_list__new_task_button"
+          >
+            タスクの新規作成
+          </button>
+        </div>
+        <div className="tasks_list__tabs">
+          <button
+            onClick={() => setActiveTab('incomplete')}
+            className={`tasks_list__tab ${activeTab === 'incomplete' ? 'tasks_list__tab--active' : ''}`}
+          >
+            未完了
+          </button>
+          <button
+            onClick={() => setActiveTab('completed')}
+            className={`tasks_list__tab ${activeTab === 'completed' ? 'tasks_list__tab--active' : ''}`}
+          >
+            完了
+          </button>
+        </div>
+      </div>
+      
       <div className="tasks_list__items">
-        <TaskCreateForm />
-        {tasks?.map(task => {
-          return <TaskItem key={task.id} task={task} />
-        })}
-        {tasks?.length === 0 && (
-          <div className="tasks_list__items__empty">No tasks yet!</div>
-        )}
+        {showCreateForm && <TaskCreateForm />}
+        {(() => {
+          const filteredTasks = tasks?.filter(task => 
+            activeTab === 'incomplete' ? !task.done : task.done
+          ) || []
+          
+          return filteredTasks.length > 0 ? (
+            <>
+              {filteredTasks.map(task => (
+                <TaskItem key={task.id} task={task} />
+              ))}
+            </>
+          ) : (
+            <div className="tasks_list__items__empty">
+              {activeTab === 'incomplete' 
+                ? 'No incomplete tasks yet!' 
+                : 'No completed tasks yet!'
+              }
+            </div>
+          )
+        })()}
       </div>
     </div>
   )

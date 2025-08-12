@@ -11,6 +11,8 @@ import './index.css'
 const Home = () => {
   const dispatch = useDispatch()
   const [selectedListId, setSelectedListId] = useState(null)
+  const [activeTab, setActiveTab] = useState('incomplete') // 'incomplete' or 'completed'
+  const [showCreateForm, setShowCreateForm] = useState(false)
 
   const lists = useSelector(state => state.list.lists)
   const tasks = useSelector(state => state.task.tasks)
@@ -93,24 +95,57 @@ const Home = () => {
           {selectedListId && (
             <div className="home__tasks_section">
               <div className="home__tasks_header">
-                <h2 className="home__tasks_title">タスク一覧</h2>
+                <div className="home__tasks_header_top">
+                  <h2 className="home__tasks_title">タスク一覧</h2>
+                  <button 
+                    onClick={() => setShowCreateForm(!showCreateForm)}
+                    className="home__new_task_button"
+                  >
+                    タスクの新規作成
+                  </button>
+                </div>
+                <div className="home__tasks_tabs">
+                  <button
+                    onClick={() => setActiveTab('incomplete')}
+                    className={`home__tasks_tab ${activeTab === 'incomplete' ? 'home__tasks_tab--active' : ''}`}
+                  >
+                    未完了
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('completed')}
+                    className={`home__tasks_tab ${activeTab === 'completed' ? 'home__tasks_tab--active' : ''}`}
+                  >
+                    完了
+                  </button>
+                </div>
                 <p className="home__tasks_category">
                   カテゴリー: {selectedList?.title}
                 </p>
               </div>
               <div className="home__tasks_content">
-                <TaskCreateForm />
-                {tasks && tasks.length > 0 ? (
-                  <div className="home__tasks_list">
-                    {tasks.map(task => (
-                      <TaskItem key={task.id} task={task} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="home__tasks_empty">
-                    <p>このカテゴリーにはまだタスクがありません</p>
-                  </div>
-                )}
+                {showCreateForm && <TaskCreateForm />}
+                {(() => {
+                  const filteredTasks = tasks?.filter(task => 
+                    activeTab === 'incomplete' ? !task.done : task.done
+                  ) || []
+                  
+                  return filteredTasks.length > 0 ? (
+                    <div className="home__tasks_list">
+                      {filteredTasks.map(task => (
+                        <TaskItem key={task.id} task={task} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="home__tasks_empty">
+                      <p>
+                        {activeTab === 'incomplete' 
+                          ? 'このカテゴリーには未完了のタスクがありません' 
+                          : 'このカテゴリーには完了したタスクがありません'
+                        }
+                      </p>
+                    </div>
+                  )
+                })()}
               </div>
             </div>
           )}
