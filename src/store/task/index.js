@@ -101,13 +101,19 @@ export const createTask = createAsyncThunk(
   'https://railway.todo.techtrain.dev/task/createTask',
   async (payload, thunkApi) => {
     const listId = thunkApi.getState().list.current
+    console.log('listId', listId)
     if (!listId) {
       console.warn('createTask: No listId found')
       return
     }
 
     try {
-      const res = await axios.post(`https://railway.todo.techtrain.dev/lists/${listId}/tasks`, payload)
+      const res = await axios.post(`https://railway.todo.techtrain.dev/lists/${listId}/tasks`, {
+        "title": "string",
+        "detail": "string",
+        "done": true,
+        "limit": "2023-12-12T23:59:59Z"
+      })
       const id = res.data.id
 
       console.log('Task created successfully:', { ...payload, id })
