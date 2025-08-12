@@ -69,8 +69,6 @@ export const login = createAsyncThunk(
 
       localStorage.setItem('railway-todo-app__token', response.data.token)
       thunkApi.dispatch(setToken(response.data.token))
-      console.log('response.data.token', response.data.token)
-      console.log('fetchUser', fetchUser())
       void thunkApi.dispatch(fetchUser())
     } catch (e) {
       return handleThunkError(e, thunkApi)

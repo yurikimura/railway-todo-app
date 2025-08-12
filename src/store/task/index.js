@@ -101,7 +101,6 @@ export const createTask = createAsyncThunk(
   'https://railway.todo.techtrain.dev/task/createTask',
   async (payload, thunkApi) => {
     const listId = thunkApi.getState().list.current
-    console.log('listId', listId)
     if (!listId) {
       console.warn('createTask: No listId found')
       return
