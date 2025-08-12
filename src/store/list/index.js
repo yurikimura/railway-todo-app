@@ -34,9 +34,10 @@ export const listSlice = createSlice({
     },
     addList: (state, action) => {
       const title = action.payload.title
+      const detail = action.payload.detail
       const id = action.payload.id
 
-      state.lists.push({ title, id })
+      state.lists.push({ title, detail, id })
     },
     removeList: (state, action) => {
       const id = action.payload.id
@@ -50,10 +51,14 @@ export const listSlice = createSlice({
     mutateList: (state, action) => {
       const id = action.payload.id
       const title = action.payload.title
+      const detail = action.payload.detail
 
       state.lists = state.lists.map(list => {
         if (list.id === id) {
           list.title = title
+          if (detail !== undefined) {
+            list.detail = detail
+          }
         }
 
         return list
@@ -100,9 +105,9 @@ export const fetchLists = createAsyncThunk(
 
 export const createList = createAsyncThunk(
   'https://railway.todo.techtrain.dev/list/createList',
-  async ({ title }, thunkApi) => {
+  async ({ title, detail }, thunkApi) => {
     try {
-      const res = await axios.post('https://railway.todo.techtrain.dev/lists', { title })
+      const res = await axios.post('https://railway.todo.techtrain.dev/lists', { title, detail })
       thunkApi.dispatch(addList(res.data))
 
       return res.data.id
@@ -126,10 +131,14 @@ export const deleteList = createAsyncThunk(
 
 export const updateList = createAsyncThunk(
   'https://railway.todo.techtrain.dev/list/updateList',
-  async ({ id, title }, thunkApi) => {
+  async ({ id, title, detail }, thunkApi) => {
     try {
-      await axios.put(`https://railway.todo.techtrain.dev/lists/${id}`, { title })
-      thunkApi.dispatch(mutateList({ id, title }))
+      const payload = { title }
+      if (detail !== undefined) {
+        payload.detail = detail
+      }
+      await axios.put(`https://railway.todo.techtrain.dev/lists/${id}`, payload)
+      thunkApi.dispatch(mutateList({ id, title, detail }))
     } catch (e) {
       return handleThunkError(e, thunkApi)
     }

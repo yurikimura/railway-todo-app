@@ -108,12 +108,7 @@ export const createTask = createAsyncThunk(
     }
 
     try {
-      const res = await axios.post(`https://railway.todo.techtrain.dev/lists/${listId}/tasks`, {
-        "title": "string",
-        "detail": "string",
-        "done": true,
-        "limit": "2023-12-12T23:59:59Z"
-      })
+      const res = await axios.post(`https://railway.todo.techtrain.dev/lists/${listId}/tasks`, payload)
       const id = res.data.id
 
       console.log('Task created successfully:', { ...payload, id })

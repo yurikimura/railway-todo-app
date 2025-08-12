@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { BackButton } from '~/components/BackButton'
 import Button from '~/components/Button'
 import Input from '~/components/Input'
+import Textarea from '~/components/Textarea'
 import './index.css'
 import { fetchLists, updateList, deleteList } from '~/store/list'
 import { useId } from '~/hooks/useId'
@@ -16,6 +17,7 @@ const EditList = () => {
   const dispatch = useDispatch()
 
   const [title, setTitle] = useState('')
+  const [detail, setDetail] = useState('')
 
   const [errorMessage, setErrorMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -27,6 +29,7 @@ const EditList = () => {
   useEffect(() => {
     if (list) {
       setTitle(list.title)
+      setDetail(list.detail || '')
     }
   }, [list])
 
@@ -40,7 +43,7 @@ const EditList = () => {
 
       setIsSubmitting(true)
 
-      void dispatch(updateList({ id: listId, title }))
+      void dispatch(updateList({ id: listId, title, detail }))
         .unwrap()
         .then(() => {
           history.push(`/lists/${listId}`)
@@ -52,7 +55,7 @@ const EditList = () => {
           setIsSubmitting(false)
         })
     },
-    [title, listId, dispatch, history]
+    [title, detail, listId, dispatch, history]
   )
 
   const handleDelete = useCallback(() => {
@@ -90,6 +93,19 @@ const EditList = () => {
             placeholder="Family"
             value={title}
             onChange={event => setTitle(event.target.value)}
+          />
+        </fieldset>
+        <fieldset className="edit_list__form_field">
+          <label htmlFor={`${id}-detail`} className="edit_list__form_label">
+            Detail
+          </label>
+          <Textarea
+            id={`${id}-detail`}
+            placeholder="リストの詳細を入力してください"
+            value={detail}
+            onChange={event => setDetail(event.target.value)}
+            rows={3}
+            autoResize={true}
           />
         </fieldset>
         <div className="edit_list__form_actions">

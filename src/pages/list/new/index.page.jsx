@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { BackButton } from '~/components/BackButton'
 import Button from '~/components/Button'
 import Input from '~/components/Input'
+import Textarea from '~/components/Textarea'
 import './index.css'
 import { createList, setCurrentList } from '~/store/list/index'
 import { useId } from '~/hooks/useId'
@@ -14,6 +15,7 @@ const NewList = () => {
   const dispatch = useDispatch()
 
   const [title, setTitle] = useState('')
+  const [detail, setDetail] = useState('')
 
   const [errorMessage, setErrorMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -24,7 +26,7 @@ const NewList = () => {
 
       setIsSubmitting(true)
 
-      void dispatch(createList({ title }))
+      void dispatch(createList({ title, detail }))
         .unwrap()
         .then(listId => {
           dispatch(setCurrentList(listId))
@@ -37,7 +39,7 @@ const NewList = () => {
           setIsSubmitting(false)
         })
     },
-    [title, dispatch, history]
+    [title, detail, dispatch, history]
   )
 
   return (
@@ -52,9 +54,22 @@ const NewList = () => {
           </label>
           <Input
             id={`${id}-title`}
-            placeholder="Family"
+            placeholder="買い物"
             value={title}
             onChange={event => setTitle(event.target.value)}
+          />
+        </fieldset>
+        <fieldset className="new_list__form_field">
+          <label htmlFor={`${id}-detail`} className="new_list__form_label">
+            Detail
+          </label>
+          <Textarea
+            id={`${id}-detail`}
+            placeholder="リストの詳細を入力してください"
+            value={detail}
+            onChange={event => setDetail(event.target.value)}
+            rows={3}
+            autoResize={true}
           />
         </fieldset>
         <div className="new_list__form_actions">
