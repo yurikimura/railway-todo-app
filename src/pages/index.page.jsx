@@ -13,6 +13,7 @@ const Home = () => {
   const [selectedListId, setSelectedListId] = useState(null)
   const [activeTab, setActiveTab] = useState('incomplete') // 'incomplete' or 'completed'
   const [showCreateForm, setShowCreateForm] = useState(false)
+  const [statusMenuOpen, setStatusMenuOpen] = useState(false)
 
   const lists = useSelector(state => state.list.lists)
   const tasks = useSelector(state => state.task.tasks)
@@ -97,26 +98,47 @@ const Home = () => {
               <div className="home__tasks_header">
                 <div className="home__tasks_header_top">
                   <h2 className="home__tasks_title">タスク一覧</h2>
-                  <button 
-                    onClick={() => setShowCreateForm(!showCreateForm)}
-                    className="home__new_task_button"
-                  >
-                    タスクの新規作成
-                  </button>
-                </div>
-                <div className="home__tasks_tabs">
-                  <button
-                    onClick={() => setActiveTab('incomplete')}
-                    className={`home__tasks_tab ${activeTab === 'incomplete' ? 'home__tasks_tab--active' : ''}`}
-                  >
-                    未完了
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('completed')}
-                    className={`home__tasks_tab ${activeTab === 'completed' ? 'home__tasks_tab--active' : ''}`}
-                  >
-                    完了
-                  </button>
+                  <div className="home__tasks_actions">
+                    <button 
+                      onClick={() => setShowCreateForm(!showCreateForm)}
+                      className="home__new_task_button"
+                    >
+                      タスクの新規作成
+                    </button>
+                    <div className="home__tasks_filter">
+                      <button
+                        type="button"
+                        className="home__tasks_filter_button"
+                        onClick={() => setStatusMenuOpen(!statusMenuOpen)}
+                        aria-expanded={statusMenuOpen}
+                        aria-haspopup="listbox"
+                      >
+                        {activeTab === 'incomplete' ? '未完了' : '完了'}
+                      </button>
+                      {statusMenuOpen && (
+                        <div className="home__tasks_filter_menu" role="listbox">
+                          <button
+                            type="button"
+                            className={`home__tasks_filter_option ${activeTab === 'incomplete' ? 'is-active' : ''}`}
+                            onClick={() => { setActiveTab('incomplete'); setStatusMenuOpen(false) }}
+                            role="option"
+                            aria-selected={activeTab === 'incomplete'}
+                          >
+                            未完了
+                          </button>
+                          <button
+                            type="button"
+                            className={`home__tasks_filter_option ${activeTab === 'completed' ? 'is-active' : ''}`}
+                            onClick={() => { setActiveTab('completed'); setStatusMenuOpen(false) }}
+                            role="option"
+                            aria-selected={activeTab === 'completed'}
+                          >
+                            完了
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <p className="home__tasks_category">
                   カテゴリー: {selectedList?.title}
