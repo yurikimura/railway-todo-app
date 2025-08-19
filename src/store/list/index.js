@@ -37,6 +37,9 @@ export const listSlice = createSlice({
       const detail = action.payload.detail
       const id = action.payload.id
 
+      if (state.lists === null) {
+        state.lists = []
+      }
       state.lists.push({ title, detail, id })
     },
     removeList: (state, action) => {

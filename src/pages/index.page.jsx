@@ -24,7 +24,17 @@ const Home = () => {
   const selectedList = lists?.find(list => list.id === selectedListId)
 
   useEffect(() => {
-    dispatch(fetchLists())
+    dispatch(fetchLists({ force: true }))
+  }, [dispatch])
+
+  // ページがフォーカスを得た時にリスト一覧を再取得
+  useEffect(() => {
+    const handleFocus = () => {
+      dispatch(fetchLists({ force: true }))
+    }
+
+    window.addEventListener('focus', handleFocus)
+    return () => window.removeEventListener('focus', handleFocus)
   }, [dispatch])
 
   useEffect(() => {
