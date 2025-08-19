@@ -29,7 +29,8 @@
 
 /* Custom input styles for this page */
 .signup .app_input {
-  width: 536px;
+  width: 100%;
+  max-width: 536px;
   height: 58px;
   border: 1px solid var(--slate-300);
   border-radius: 4px;
@@ -148,8 +149,61 @@
 }
 
 /* Responsive design */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .signup {
+    padding: 1rem;
+  }
+
+  .signup__header {
+    margin: -1rem -1rem 1.5rem -1rem;
+    padding: 1rem;
+  }
+
   .signup__title {
     font-size: 1.75rem;
+  }
+
+  .signup .app_input {
+    height: 52px;
+    font-size: 1rem;
+  }
+
+  .signup__form_actions_row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .signup__primary_button,
+  .signup__secondary_button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .signup {
+    padding: 0.5rem;
+  }
+
+  .signup__header {
+    margin: -0.5rem -0.5rem 1rem -0.5rem;
+    padding: 1rem 0.5rem;
+  }
+
+  .signup__title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .signup .app_input {
+    height: 48px;
+    font-size: 1rem;
+  }
+
+  .signup__container {
+    padding: 0;
   }
 }

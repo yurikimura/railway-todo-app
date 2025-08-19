@@ -20,9 +20,15 @@
   --slate-900: #0f172a;
   --slate-950: #020617;
 
-  --width-login-form: 420px;
-  --width-edit-form: 600px;
-  --width-main-content: 800px;
+  /* レスポンシブ対応の幅設定 */
+  --width-login-form: min(420px, calc(100vw - 2rem));
+  --width-edit-form: min(600px, calc(100vw - 2rem));
+  --width-main-content: min(800px, calc(100vw - 2rem));
+
+  /* ブレークポイント */
+  --mobile-breakpoint: 640px;
+  --tablet-breakpoint: 768px;
+  --desktop-breakpoint: 1024px;
 
   font-family:
     Inter,
@@ -41,12 +47,43 @@
   line-height: 1.5rem;
 }
 
+/* タブレット向けの幅調整 */
+@media (max-width: 768px) {
+  :root {
+    --width-login-form: calc(100vw - 2rem);
+    --width-edit-form: calc(100vw - 2rem);
+    --width-main-content: calc(100vw - 2rem);
+  }
+}
+
+/* モバイル向けの幅調整 */
+@media (max-width: 640px) {
+  :root {
+    --width-login-form: calc(100vw - 1rem);
+    --width-edit-form: calc(100vw - 1rem);
+    --width-main-content: calc(100vw - 1rem);
+    font-size: 14px;
+  }
+}
+
 .app_button {
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 700;
+  /* タッチデバイス対応 */
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* タブレット・モバイル向けボタン調整 */
+@media (max-width: 768px) {
+  .app_button {
+    padding: 0.75rem 1.25rem;
+    min-height: 48px;
+    font-size: 1.1rem;
+  }
 }
 
 .app_button:focus {
@@ -89,6 +126,17 @@
   padding: 0.5rem 1rem;
   border: 1px solid var(--slate-200);
   color: var(--slate-800);
+  /* タッチデバイス対応 */
+  min-height: 44px;
+}
+
+/* タブレット・モバイル向け入力フィールド調整 */
+@media (max-width: 768px) {
+  .app_input {
+    padding: 0.75rem 1rem;
+    min-height: 48px;
+    font-size: 1.1rem;
+  }
 }
 
 .app_input:focus {
@@ -103,4 +151,11 @@
 
 .main_content {
   min-height: 100vh;
+}
+
+/* 全体的なパディング調整 */
+@media (max-width: 640px) {
+  body {
+    padding: 0;
+  }
 }

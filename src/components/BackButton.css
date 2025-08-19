@@ -4,13 +4,37 @@
   gap: 0.5rem;
   color: var(--indigo-600);
   width: fit-content;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  /* タッチデバイス対応 */
+  min-height: 44px;
+  min-width: 44px;
+  transition: all 0.2s;
 }
 
 .back_button:hover {
   cursor: pointer;
-  opacity: 0.8;
+  background: var(--indigo-50);
+  opacity: 0.9;
 }
 
 .back_button__icon {
   fill: currentColor;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* タブレット・モバイル対応 */
+@media (max-width: 768px) {
+  .back_button {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0.75rem;
+  }
+
+  .back_button__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }

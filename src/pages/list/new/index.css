@@ -19,16 +19,16 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-
-  max-width: 600px;
+  max-width: var(--width-edit-form);
   margin: 0 auto;
+  padding: 2rem;
 }
 
 .new_list__error {
   color: var(--red-500);
 }
 
-.new_list__title {
+.new_list__page_title {
   color: var(--slate-700);
   font-size: 1.5rem;
   line-height: 2rem;
@@ -39,7 +39,8 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-width: 240px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .new_list__form_field {
@@ -58,9 +59,52 @@
   flex-direction: row;
   gap: 1rem;
   align-items: center;
-  max-width: 240px;
 }
 
 .new_list__form_actions_spacer {
   flex: 1;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .new_list {
+    padding: 1rem;
+  }
+
+  .new_list__header {
+    margin: -1rem -1rem 1.5rem -1rem;
+    padding: 1rem;
+  }
+
+  .new_list__form {
+    max-width: 100%;
+  }
+
+  .new_list__form_actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .new_list__form_actions_spacer {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .new_list {
+    padding: 0.5rem;
+  }
+
+  .new_list__header {
+    margin: -0.5rem -0.5rem 1rem -0.5rem;
+    padding: 1rem 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .new_list__page_title {
+    font-size: 1.25rem;
+  }
 }

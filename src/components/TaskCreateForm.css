@@ -25,6 +25,8 @@
   font-weight: 500;
   color: var(--slate-800);
   background: transparent;
+  border: none;
+  word-break: break-word;
 }
 
 .task_create_form__title::placeholder {
@@ -39,6 +41,7 @@
   display: block;
   width: 1.5rem;
   height: 1.5rem;
+  flex-shrink: 0;
 }
 
 .task_create_form__mark____incomplete {
@@ -73,6 +76,8 @@
   resize: none;
   height: 0;
   width: 100%;
+  border: none;
+  word-break: break-word;
 }
 
 .task_create_form__detail::placeholder {
@@ -97,4 +102,58 @@
 
 .task_create_form__spacer {
   flex: 1;
+}
+
+/* タブレット・モバイル対応 */
+@media (max-width: 768px) {
+  .task_create_form {
+    padding: 1rem;
+  }
+
+  .task_create_form__title {
+    font-size: 1.1rem;
+  }
+
+  .task_create_form__mark_button {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .task_create_form__mark____incomplete,
+  .task_create_form__mark____complete {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .task_create_form__actions {
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .task_create_form {
+    padding: 0.75rem;
+  }
+
+  .task_create_form__title_container {
+    gap: 0.75rem;
+  }
+
+  .task_create_form__title {
+    font-size: 1rem;
+  }
+
+  .task_create_form__detail {
+    font-size: 0.9rem;
+  }
+
+  .task_create_form__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .task_create_form__spacer {
+    display: none;
+  }
 }
