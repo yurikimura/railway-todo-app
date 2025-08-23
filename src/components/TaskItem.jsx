@@ -43,7 +43,7 @@ export const TaskItem = ({ task }) => {
           )}
         </button>
         <div className="task_item__title" data-done={done}>
-          {title}
+          {title || (detail ? detail.slice(0, 30) + (detail.length > 30 ? '...' : '') : '（タイトルなし）')}
         </div>
         <div aria-hidden className="task_item__title_spacer"></div>
         {limit && (

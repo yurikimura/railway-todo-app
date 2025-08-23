@@ -23,25 +23,23 @@ export const Router = () => {
           <Route exact path="/signup">
             <SignUp />
           </Route>
-          {auth ? (
-            <>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/lists/:listId">
-                <ListIndex />
-              </Route>
-              <Route exact path="/list/new">
-                <NewList />
-              </Route>
-              <Route exact path="/lists/:listId/tasks/:taskId">
-                <EditTask />
-              </Route>
-              <Route exact path="/lists/:listId/edit">
-                <EditList />
-              </Route>
-            </>
-          ) : (
+          {auth ? [
+            <Route exact path="/" key="home">
+              <Home />
+            </Route>,
+            <Route exact path="/lists/:listId" key="listIndex">
+              <ListIndex />
+            </Route>,
+            <Route exact path="/list/new" key="newList">
+              <NewList />
+            </Route>,
+            <Route exact path="/lists/:listId/tasks/:taskId" key="editTask">
+              <EditTask />
+            </Route>,
+            <Route exact path="/lists/:listId/edit" key="editList">
+              <EditList />
+            </Route>
+          ] : (
             <Route path="/">
               <Redirect to="/signin" />
             </Route>

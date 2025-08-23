@@ -63,7 +63,7 @@ export const TaskCreateForm = () => {
       setFormState('submitting')
 
       const taskData = {
-        title,
+        title: title || (detail ? detail.slice(0, 30) + (detail.length > 30 ? '...' : '') : '新しいタスク'),
         detail,
         done,
         ...(limit && { limit: formatToISO(limit) }),
@@ -179,7 +179,7 @@ export const TaskCreateForm = () => {
             <Button
               type="submit"
               onBlur={handleBlur}
-              disabled={!title || formState === 'submitting'}
+              disabled={!detail || formState === 'submitting'}
             >
               Add
             </Button>
