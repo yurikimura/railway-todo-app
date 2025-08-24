@@ -154,6 +154,14 @@
 }
 
 /* Responsive design */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .signin .app_input {
+    width: 536px;
+    max-width: 536px;
+    height: 58px;
+  }
+}
+
 @media (max-width: 768px) {
   .signin {
     padding: 1rem;
